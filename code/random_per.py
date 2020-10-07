@@ -58,7 +58,7 @@ if __name__ == '__main__':
     parser.add_argument('--eval_method', type=str, required=True, help="evaluation method ('avg' or 'max')")
     args = parser.parse_args()
 
-    splits_path = os.path.join(args.data_dir, args.splits_filename)
+    splits_path = os.path.join(args.data_dir, 'splits/', args.splits_filename)
     h5_path = os.path.join(args.data_dir, args.h5_filename)
     results_path = os.path.join(args.save_dir,  args.results_filename)
 
