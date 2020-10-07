@@ -12,21 +12,21 @@ from random_per import compute_RP
 def evaluate_summary_PoR(data_dir, h5_filename, split_id, input_rp, input_fscore, save_dir, results_filename, rp=None, fscore=None, summaries_path=None, splits_filename=None, eval_method=None):
 
     # 1) Compute the performance of a random summarizer (F) for the selected data split
-    if args.input_rp:
-        F = args.rp
+    if input_rp:
+        F = rp
     else:
         # Read the names of the videos of the selected split
-        if args.input_fscore:
-            splits_path = os.path.join(args.data_dir, 'splits/', args.splits_filename)
+        if input_fscore:
+            splits_path = os.path.join(data_dir, 'splits/', splits_filename)
             video_names = []
             with open(splits_path) as f:
                 data = json.loads(f.read())
-                split = data[args.split_id]
+                split = data[split_id]
                 for video_name in split['test_keys']:
                     video_names.append(video_name)
 
         else:
-            with open(args.summaries_path) as f:
+            with open(summaries_path) as f:
                 data = json.loads(f.read())
                 video_names = list(data.keys())
 
@@ -34,7 +34,7 @@ def evaluate_summary_PoR(data_dir, h5_filename, split_id, input_rp, input_fscore
         split_user_summary = []
         split_shot_bound =[]
         split_nframes = []
-        with h5py.File(os.path.join(args.data_dir, args.h5_filename), 'r') as hdf:
+        with h5py.File(os.path.join(data_dir, h5_filename), 'r') as hdf:
             for video_name in video_names:
 
                 user_summary = np.array( hdf.get(video_name+'/user_summary') )
@@ -45,23 +45,23 @@ def evaluate_summary_PoR(data_dir, h5_filename, split_id, input_rp, input_fscore
                 split_shot_bound.append(sb)
                 split_nframes.append(n_frames)
 
-        F = compute_RP(split_shot_bound, split_nframes, split_user_summary, args.eval_method)
+        F = compute_RP(split_shot_bound, split_nframes, split_user_summary, eval_method)
 
 
     # 2) Compute the F-Score (S) for each generated summary of the selected data split
-    if args.input_fscore:
-        S = args.fscore
+    if input_fscore:
+        S = fscore
     else:
-        hdf = h5py.File(os.path.join(args.data_dir, args.h5_filename), 'r')
+        hdf = h5py.File(os.path.join(data_dir, h5_filename), 'r')
         split_fscores = []
-        with open(args.summaries_path) as f:
+        with open(summaries_path) as f:
             data = json.loads(f.read())
             video_names = list(data.keys())
 
             for video_name in video_names:
                 summary = np.asarray(data[video_name])
                 user_summary = np.array( hdf.get(video_name+'/user_summary') )
-                fscore = evaluate_summary_fscore(summary, user_summary, args.eval_method)
+                fscore = evaluate_summary_fscore(summary, user_summary, eval_method)
                 split_fscores.append(fscore)
 
         hdf.close()
@@ -69,13 +69,13 @@ def evaluate_summary_PoR(data_dir, h5_filename, split_id, input_rp, input_fscore
 
     # 3) Use the computed F-Scores to compute the PoR metric as: PoR = S / F * 100
     PoR = S / F * 100
-    print("PoR for split", args.split_id, "is", PoR)
+    print("PoR for split", split_id, "is", PoR)
 
     # save in a csv file: (split_{split_id}, RP)
-    results_path = os.path.join(args.save_dir, args.results_filename)
+    results_path = os.path.join(save_dir, results_filename)
     csv_file = open(results_path, 'a')
     csv_writer = csv.writer(csv_file)
-    csv_writer.writerow(['split_'+str(args.split_id), str(PoR)])
+    csv_writer.writerow(['split_'+str(split_id), str(PoR)])
     csv_file.close()
 
     return PoR
