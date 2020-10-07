@@ -17,7 +17,7 @@ def evaluate_summary_PoR(data_dir, h5_filename, split_id, input_rp, input_fscore
     else:
         # Read the names of the videos of the selected split
         if args.input_fscore:
-            splits_path = os.path.join(args.data_dir, args.splits_filename)
+            splits_path = os.path.join(args.data_dir, 'splits/', args.splits_filename)
             video_names = []
             with open(splits_path) as f:
                 data = json.loads(f.read())
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     parser.add_argument('--split_id', type=int, required=True, help="split index") # e.g. 2 (starting from 0)
 
     parser.add_argument('--input_rp', type=str2bool, required=True, help="whether the random performance has already been extracted ('True' or 'False')")
-    parser.add_argument('--rp', type=float, required=False, help="F-Score value for this split (if input_rp=True)") # e.g. 42.4
+    parser.add_argument('--rp', type=float, required=False, help="F-Score value for the random performance of this split (if input_rp=True)") # e.g. 42.4
 
     parser.add_argument('--input_fscore', type=str2bool, required=True, help="whether the F-Scores have already been extracted ('True' or 'False')")
     parser.add_argument('--fscore', type=float, required=False, help="F-Score value for this split (if input_fscore=True)") # e.g. 45.6
