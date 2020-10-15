@@ -1,9 +1,9 @@
 # Performance over Random: A Robust Evaluation Protocol for Video Summarization Methods
 
-## PyTorch Implementation of PoR-Summarization-Measure
+## Python Implementation of the PoR Evaluation Measure
 - From **"Performance over Random: A Robust Evaluation Protocol for Video Summarization Methods"** (28th ACM International Conference on Multimedia (MM '20), October 12-16, 2020, Seattle, WA, USA)
 - Written by Evlampios Apostolidis, Eleni Adamantidou, Alexandros I. Metsai, Vasileios Mezaris and Ioannis Patras
-- This software can be used for evaluating automatically generated video summaries using the PoR evaluation protocol.
+- This software can be used for evaluating automatically-generated video summaries using the PoR evaluation protocol.
 
 ## Main dependencies
 - Python  3.6
@@ -27,19 +27,19 @@ Original videos and annotations for each dataset are also available in the autho
 - TVSum dataset: https://github.com/yalesong/tvsum
 - SumMe dataset: https://gyglim.github.io/me/vsum/index.html#benchmark
 
-The 50 randomly created splits that were used for the experiments presented in the paper can be found in the "data/splits" directory. In each split 80% of the data is used for training and 20% for testing.
+The 50 randomly-created data splits that were used in our experiments can be found in the "data/splits" directory. In each split 80% of the data is used for training and the remaining 20% for testing.
 
 ## Evaluation
-To evaluate the automatically generated summaries of a data split, run:
+To evaluate the automatically-generated summaries of a data split, run:
 <pre>
 python evaluation_PoR.py
   --data_dir: Path to data directory (here, '../data/')
   --h5_filename: Name of the aforementioned h5 file.
   --split_id: Index of the selected data split.
-  --input_rp: Whether the random performance has already been extracted ('True' or 'False').
-  --rp: F-Score value for the random performance of the split (if input_rp=True)
-  --input_fscore: Whether the F-Score values for the generated summaries have already been extracted.
-  --fscore: F-Score value for this split (if input_fscore=True)
+  --input_rp: Whether the random performance has already been computed ('True' or 'False').
+  --rp: F-Score value for the random performance of the selected data split (if input_rp=True)
+  --input_fscore: Whether the F-Score values for the generated summaries have already been computed.
+  --fscore: the computed F-Score value for the selected data split (if input_fscore=True)
   --summaries_path: Path to the generated binary summaries' file (if input_fscore=False)
   --splits_filename: Name of the splits' file (if input_rp=False & input_fscore=True)
   --eval_method: Evaluation Method ('avg' or 'max') - if input_rp=False or input_fscore=False
@@ -47,9 +47,9 @@ python evaluation_PoR.py
   --results_filename: name of the file where the results will be saved (.csv)
 </pre>
 
-Not all of the above arguments are required to run the code. It is specified in the paranthesis above when an argument is required or not. This functionality gives freedom to the user to use the whole pipeline or to provide either the random performance or the fscore of the generated summaries, that have already been computed.
+Not all of the above arguments are required to run the code. It is specified in the paranthesis above when an argument is required or not. This functionality gives freedom to the user to use the whole pipeline or to provide either the random performance or the F-Score of the generated summaries, that have already been computed.
 
-Alternatively, you can integrate in your own code the function "evaluate_summary_PoR(...)" included in this file if you want to evaluate multiple data splits.
+Alternatively, if you want to evaluate multiple different data splits using the PoR measure, you can integrate in your own code the function "evaluate_summary_PoR(...)" that is included in the "evaluation_PoR.py" file.
 
 ## Calculation of random performance
 To calculate only the performance of a random summarizer for a data split, run:
