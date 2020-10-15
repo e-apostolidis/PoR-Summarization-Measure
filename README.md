@@ -3,7 +3,7 @@
 ## Python Implementation of the PoR Evaluation Measure
 - From **"Performance over Random: A Robust Evaluation Protocol for Video Summarization Methods"** (28th ACM International Conference on Multimedia (MM '20), October 12-16, 2020, Seattle, WA, USA)
 - Written by Evlampios Apostolidis, Eleni Adamantidou, Alexandros I. Metsai, Vasileios Mezaris and Ioannis Patras
-- This software can be used for evaluating automatically-generated video summaries using the PoR evaluation protocol.
+- This software can be used for evaluating the summaries of a video summarization method using the PoR evaluation protocol.
 
 ## Main dependencies
 - Python  3.6
