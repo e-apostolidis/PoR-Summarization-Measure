@@ -34,34 +34,34 @@ To evaluate the performance of a summarization algorithm using the PoR evaluatio
 <pre>
 python evaluation_PoR.py
   --data_dir: Path to data directory (here, '../data/')
-  --h5_filename: Name of the aforementioned h5 file.
-  --split_id: Index of the selected data split.
-  --input_rp: Whether the random performance has already been computed ('True' or 'False').
-  --rp: F-Score value for the random performance of the selected data split (if input_rp=True)
-  --input_fscore: Whether the F-Score values for the generated summaries have already been computed.
-  --fscore: the computed F-Score value for the selected data split (if input_fscore=True)
-  --summaries_path: Path to the generated binary summaries' file (if input_fscore=False)
-  --splits_filename: Name of the splits' file (if input_rp=False & input_fscore=True)
-  --eval_method: Evaluation Method ('avg' or 'max') - if input_rp=False or input_fscore=False
-  --save_dir: Path to results directory (here, '../results/')
-  --results_filename: name of the file where the results will be saved (.csv)
+  --h5_filename: Name of the h5 file with the video features and annotations of the used dataset
+  --split_id: Index of the selected data split
+  --input_rp: Boolean value ('True' or 'False') that indicates whether the random performance has been already computed for the test videos of the used data split
+  --rp: F-Score value (in percentages) of the computed random performance (Optional use, if input_rp=True)
+  --input_fscore: Boolean value ('True' or 'False') that indicates whether the performance of a video summarization method has been already computed for the test videos of the used data split
+  --fscore: F-Score value (in percentages) of the computed summarization performance (Optional use, if input_rp=True)
+  --summaries_path: Path to the binary (json) file with the data about the automatically-generated summary (Optional use, if input_fscore=False)
+  --splits_filename: Name of the json file with the data splits, that can be found in '../data/splits/'
+  --eval_method: String that indicates how the computed F-Score values for the different user summaries of a test video will be used; it can be either 'avg' (for the TVSum dataset) or 'max' (for the SumMe dataset)
+  --save_dir: Path to the directory where the results of the evaluation will be stored (here, '../results/')
+  --results_filename: Name of the file where the results will be stored (.csv)
 </pre>
 
-Not all of the above arguments are required to run the code. It is specified in the paranthesis above when an argument is required or not. This functionality gives freedom to the user to use the whole pipeline or to provide either the random performance or the F-Score of the generated summaries, that have already been computed.
+Please note that some arguments are optional for running the code. This functionality gives freedom to the user, which is able to either use the entire evaluation pipeline or to provide precomputed scores about the performance of the random summarizer and/or a summarization method.
 
-Alternatively, if you want to evaluate multiple different data splits using the PoR measure, you can integrate in your own code the function "evaluate_summary_PoR(...)" that is included in the "evaluation_PoR.py" file.
+Alternatively, if the user wants to evaluate multiple different data splits using the PoR evaluation measure, he/she can integrate in his/her own code the function "evaluate_summary_PoR(...)" that is included in the "evaluation_PoR.py" file.
 
 ## Calculation of random performance
-To calculate only the performance of a random summarizer for a data split, run:
+To calculate only the performance of a random summarizer for the test videos of a data split, run:
 <pre>
 python random_per.py
   --data_dir: Path to data directory (here, '../data/')
-  --h5_filename: Name of the aforementioned h5 file.
-  --split_id: Index of the selected data split.
-  --splits_filename: Name of the splits' file (if input_rp=False & input_fscore=True)
-  --eval_method: Evaluation Method ('avg' or 'max') - if input_rp=False or input_fscore=False
-  --save_dir: Path to results directory (here, '../results/')
-  --results_filename: name of the file where the results will be saved (.csv)
+  --h5_filename: Name of the h5 file with the video features and annotations of the used dataset
+  --split_id: Index of the selected data split
+  --splits_filename: Name of the json file with the data splits, that can be found in '../data/splits/'
+  --eval_method: String that indicates how the computed F-Score values for the different user summaries of a test video will be used; it can be either 'avg' (for the TVSum dataset) or 'max' (for the SumMe dataset)
+  --save_dir: Path to the directory where the results of the evaluation will be stored (here, '../results/')
+  --results_filename: Name of the file where the results will be stored (.csv)
 </pre>
 
 ## Citation
