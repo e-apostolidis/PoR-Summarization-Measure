@@ -30,7 +30,9 @@ Original videos and annotations for each dataset are also available in the autho
 The 50 randomly-created data splits that were used in our experiments can be found in the "data/splits" directory. In each split 80% of the data is used for training and the remaining 20% for testing.
 
 ## Evaluation
-To evaluate the automatically-generated summaries of a data split, run:
+To evaluate the performance of a summarization algorithm using the PoR evaluation measure, the output of the algorithm should follow the format of the binary (json) file available [here](https://github.com/e-apostolidis/PoR-Summarization-Measure/blob/master/data/example_binary_summary.json). In this file, the sequence of binary (0 or 1) values for each test video indicates whether a video frame was selected (value = 1) or not (value = 0) to be inlcuded in the summary.
+
+Given this binary file, run:
 <pre>
 python evaluation_PoR.py
   --data_dir: Path to data directory (here, '../data/')
